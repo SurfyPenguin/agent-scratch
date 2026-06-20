@@ -1,0 +1,14 @@
+[project]
+name = "agent-scratch"
+version = "0.1.0"
+description = "A basic agent"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "python-dotenv>=1.2.2",
+]
+
+[dependency-groups]
+gemini = [
+    "google-genai>=2.9.0",
+]
