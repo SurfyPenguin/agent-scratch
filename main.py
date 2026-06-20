@@ -1,11 +1,9 @@
 from google import genai
 from google.genai.types import GenerateContentConfig
 
-from models import gemini_models
-from config import GEMINI_API_KEY
+from config import GEMINI_API_KEY, GEMINI_MODEL
 from tools import tools
 
-MODEL: gemini_models = "gemini-3.1-flash-lite"
 EXIT_COMMANDS = ["/exit", "/quit"]
 
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -19,7 +17,7 @@ config = GenerateContentConfig(
 
 def main() -> None:
     chat = client.chats.create(
-        model=MODEL,
+        model=GEMINI_MODEL,
         config=config,
     )
 
