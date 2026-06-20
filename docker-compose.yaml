@@ -1,0 +1,16 @@
+services:
+  agent:
+    build: .
+    stdin_open: true
+    tty: true
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - ./workspace:/workspace
+    mem_limit: 512m
+    cpus: 1
+    pids_limit: 100
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
