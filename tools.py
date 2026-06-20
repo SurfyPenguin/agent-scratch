@@ -1,4 +1,5 @@
 from typing import Callable
+import subprocess
 
 tools = []
 
@@ -30,3 +31,29 @@ def write_file(file_path: str, content: str) -> str:
         return f"Successfully wrote to `{file_path}`."
     except IOError as e:
         return f"Error writing to file `{file_path}`: {e}"
+    
+@add_tool
+def run_shell_command(command: str) -> str:
+    """
+    Execute a shell command and return its stdout, stderr, and exit code.
+    Use this to run tests, compile code, list directory trees, or check system status.
+    """
+    try:
+        result = subprocess.run(
+            command,
+            shell=True,
+            text=True,
+            capture_output=True,
+            timeout=10,
+        )
+        output = [f"Exit code: {result.returncode}"]
+        if result.stdout:
+            output.append(f"STDOUT: {result.stdout.strip()}")
+        if result.stderr:
+            output.append(f"STDERR: {result.stderr.strip()}")
+
+        return "\n".join(output)
+    except subprocess.TimeoutExpired:
+        return "Error: Command timed out"
+    except Exception as e:
+        return f"Error executing command: {e}"
