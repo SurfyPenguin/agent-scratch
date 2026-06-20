@@ -1,6 +1,7 @@
 services:
   agent:
     build: .
+    user: "${UID:-1000}:${GID:-1000}"
     stdin_open: true
     tty: true
     environment:
