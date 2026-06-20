@@ -1,15 +1,47 @@
 from google import genai
+from google.genai.types import GenerateContentConfig
 
 from models import gemini_models
 from config import GEMINI_API_KEY
 
 MODEL: gemini_models = "gemini-2.5-flash"
+EXIT_COMMANDS = ["/exit", "/quit"]
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-response = client.models.generate_content(
-    model=MODEL,
-    contents="Any word for your friend claude?"
+def read_file(file_path: str) -> str:
+    """
+    Use this tool when the user asks you to read or inspect the contents of a text file.
+    """
+    try:
+        with open(file_path, "r") as file:
+            return file.read()
+    except FileNotFoundError:
+        return f"Error: File at `{file_path}` was not found."
+    except IOError as e:
+        return f"Error reading file `{file_path}`: {e}"
+
+system_prompt = "You are a senior software developer, who specializes in design patterns and system architecture."
+
+config = GenerateContentConfig(
+    system_instruction=system_prompt,
+    tools=[read_file]
 )
 
-print(response.text)
+def main() -> None:
+    chat = client.chats.create(
+        model=MODEL,
+        config=config,
+    )
+
+    while True:
+        message = input(" >> ")
+
+        if message.strip().lower() in EXIT_COMMANDS:
+            return
+
+        response = chat.send_message(message)
+        print(response.text)
+
+if __name__ == "__main__":
+    main()
