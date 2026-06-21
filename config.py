@@ -1,6 +1,10 @@
 import os
 
-from models import gemini_models
+from core.gemini_models import gemini_models
 
-GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
+try:
+    GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
+except KeyError:
+    print("Error: gemini api key not found in environment")
+
 GEMINI_MODEL: gemini_models = "gemini-3.1-flash-lite"
