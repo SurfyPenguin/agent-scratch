@@ -7,11 +7,17 @@ class Registry:
     def __init__(self):
         self.registry: dict[str, ToolFunction] = {}
 
-    def register(self, *, sensitive: bool = False) -> Callable[..., Any]:
+    def register(
+        self,
+        *,
+        sensitive: bool = False,
+        prompt: str | None = None,
+    ) -> Callable[..., Any]:
         def decorator(func: Callable[..., Any]):
             self.registry[func.__name__] = ToolFunction(
                 function=func,
                 sensitive=sensitive,
+                prompt=prompt,
             )
             return func
 

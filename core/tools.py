@@ -5,7 +5,10 @@ from core.registry import Registry
 tools = Registry()
 
 
-@tools.register(sensitive=True)
+@tools.register(
+    sensitive=True,
+    prompt="allow agent to read file: `{file_path}`?",
+)
 def read_file(file_path: str) -> str:
     """
     Use this tool when the user asks you to read or inspect the contents of a text file.
@@ -19,7 +22,10 @@ def read_file(file_path: str) -> str:
         return f"Error reading file `{file_path}`: {e}"
 
 
-@tools.register(sensitive=True)
+@tools.register(
+    sensitive=True,
+    prompt="allow agent to write to: `{file_path}`?",
+)
 def write_file(file_path: str, content: str) -> str:
     """
     Use this tool when the user asks you to write, create, or edit a file.
@@ -32,7 +38,10 @@ def write_file(file_path: str, content: str) -> str:
         return f"Error writing to file `{file_path}`: {e}"
 
 
-@tools.register(sensitive=True)
+@tools.register(
+    sensitive=True,
+    prompt="allow agent to execute command: `{command}`?",
+)
 def run_shell_command(command: str) -> str:
     """
     Execute a shell command and return its stdout, stderr, and exit code.
