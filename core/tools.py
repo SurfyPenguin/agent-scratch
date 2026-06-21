@@ -4,7 +4,8 @@ from core.registry import Registry
 
 tools = Registry()
 
-@tools.register()
+
+@tools.register(sensitive=True)
 def read_file(file_path: str) -> str:
     """
     Use this tool when the user asks you to read or inspect the contents of a text file.
@@ -16,7 +17,8 @@ def read_file(file_path: str) -> str:
         return f"Error: File at `{file_path}` was not found."
     except IOError as e:
         return f"Error reading file `{file_path}`: {e}"
-    
+
+
 @tools.register(sensitive=True)
 def write_file(file_path: str, content: str) -> str:
     """
@@ -28,7 +30,8 @@ def write_file(file_path: str, content: str) -> str:
         return f"Successfully wrote to `{file_path}`."
     except IOError as e:
         return f"Error writing to file `{file_path}`: {e}"
-    
+
+
 @tools.register(sensitive=True)
 def run_shell_command(command: str) -> str:
     """
