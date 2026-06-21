@@ -6,6 +6,9 @@ requires-python = ">=3.12"
 name = "agent-scratch"
 version = "0.1.0"
 source = { virtual = "." }
+dependencies = [
+    { name = "pydantic" },
+]
 
 [package.dev-dependencies]
 gemini = [
@@ -13,6 +16,7 @@ gemini = [
 ]
 
 [package.metadata]
+requires-dist = [{ name = "pydantic", specifier = ">=2.13.4" }]
 
 [package.metadata.requires-dev]
 gemini = [{ name = "google-genai", specifier = ">=2.9.0" }]
