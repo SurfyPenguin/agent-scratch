@@ -2,7 +2,7 @@ from google import genai
 from google.genai.types import GenerateContentConfig
 
 from config import GEMINI_API_KEY, GEMINI_MODEL
-from tools import tools
+from core.tools import tools
 
 EXIT_COMMANDS = ["/exit", "/quit"]
 
@@ -12,7 +12,7 @@ system_prompt = "You are a senior software developer, who specializes in design 
 
 config = GenerateContentConfig(
     system_instruction=system_prompt,
-    tools=tools
+    tools=tools.get_functions()
 )
 
 def main() -> None:

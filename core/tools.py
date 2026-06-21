@@ -29,7 +29,7 @@ def write_file(file_path: str, content: str) -> str:
     except IOError as e:
         return f"Error writing to file `{file_path}`: {e}"
     
-@tools.register()
+@tools.register(sensitive=True)
 def run_shell_command(command: str) -> str:
     """
     Execute a shell command and return its stdout, stderr, and exit code.
