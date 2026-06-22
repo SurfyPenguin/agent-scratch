@@ -6,7 +6,7 @@ tools = Registry()
 
 
 @tools.register(
-    sensitive=True,
+    sensitive=False,
     prompt="allow agent to read file: `{file_path}`?",
 )
 def read_file(file_path: str) -> str:
