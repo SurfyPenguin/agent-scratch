@@ -13,7 +13,7 @@ class Conversation(BaseModel):
     def parse_approval(
         self,
         content: str,
-    ) -> bool:
+    ) -> bool | None:
         content = content.strip().lower()
         if content in ["yes", "y"]:
             return True
