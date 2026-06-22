@@ -3,6 +3,8 @@ from google.genai import types
 
 from config import GEMINI_API_KEY, GEMINI_MODEL
 from core.tools import tools
+from models.conversation import Conversation
+from helpers.console import print_markdown
 
 EXIT_COMMANDS = ["/exit", "/quit"]
 
@@ -23,28 +25,18 @@ def main() -> None:
         config=config,
     )
 
+    conversation = Conversation(chat=chat)
     while True:
-        message = input(" >> ")
+        user_message = input(">> ")
 
-        if message.strip().lower() in EXIT_COMMANDS:
+        if (
+            user_message.strip().startswith("/")
+            and user_message.strip().lower() in EXIT_COMMANDS
+        ):
             return
+        response = conversation.send_message(user_message)
 
-        response = chat.send_message(message)
-        part = response.parts[0]
-
-        while part.function_call is not None:
-            print(f"> calling: {part.function_call.name}")
-            tool = tools.registry[part.function_call.name]
-            result = tool.function(**part.function_call.args)
-
-            response = chat.send_message(
-                message=types.Part.from_function_response(
-                    name=part.function_call.name, response={"output": result}
-                )
-            )
-            part = response.parts[0]
-
-        print(response.text)
+        print_markdown(response.text)
 
 
 if __name__ == "__main__":
