@@ -4,7 +4,7 @@ from google.genai import types
 from config import GEMINI_API_KEY, GEMINI_MODEL
 from core.tools import tools
 from models.conversation import Conversation
-from helpers.console import print_markdown
+from models.io_interface import ConsoleIO
 
 EXIT_COMMANDS = ["/exit", "/quit"]
 
@@ -18,6 +18,8 @@ config = types.GenerateContentConfig(
     automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
 )
 
+console = ConsoleIO()
+
 
 def main() -> None:
     chat = client.chats.create(
@@ -25,9 +27,9 @@ def main() -> None:
         config=config,
     )
 
-    conversation = Conversation(chat=chat)
+    conversation = Conversation(chat=chat, io=console)
     while True:
-        user_message = input(">> ")
+        user_message = console.prompt()
 
         if (
             user_message.strip().startswith("/")
@@ -36,7 +38,7 @@ def main() -> None:
             return
         response = conversation.send_message(user_message)
 
-        print_markdown(response.text)
+        console.display(response.text)
 
 
 if __name__ == "__main__":
