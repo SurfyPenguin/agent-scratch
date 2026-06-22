@@ -1,6 +1,6 @@
 from typing import Callable, Any
 
-from core.models import ToolFunction
+from models.tool_function import ToolFunction
 
 
 class Registry:
