@@ -3,11 +3,13 @@ from google.genai import types
 from pydantic import BaseModel, ConfigDict
 
 from helpers.response import is_function_call, get_function_call, get_tool
-from helpers.console import print_markdown
+from .io_interface import IOInterface
 
 
 class Conversation(BaseModel):
     chat: Chat
+    io: IOInterface
+
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def parse_approval(
@@ -28,8 +30,9 @@ class Conversation(BaseModel):
     ) -> bool:
         while True:
             tool = get_tool(function_call)
-            print_markdown(tool.get_prompt_from_args(function_call.args))
-            approval = self.parse_approval(input())
+            approval = self.parse_approval(
+                self.io.prompt(tool.get_prompt_from_args(function_call.args))
+            )
 
             if approval is not None:
                 return approval
