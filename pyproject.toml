@@ -10,7 +10,13 @@ dependencies = [
     "rich>=15.0.0",
 ]
 
+[tool.setuptools]
+packages = ["models", "helpers", "core"]
+
 [dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
 gemini = [
     "google-genai>=2.9.0",
 ]
