@@ -14,6 +14,7 @@ class IOInterface(Protocol):
 
 class ConsoleIO(BaseModel):
     console: Console = Field(default_factory=Console)
+
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def display(self, content: str) -> None:
