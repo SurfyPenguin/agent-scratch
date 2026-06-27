@@ -13,6 +13,9 @@ __pycache__/
 # vscode
 .vscode
 
+# node / npm
+**/node_modules/
+
 # docker
 workspace/
 get-docker.sh
