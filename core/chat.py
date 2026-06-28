@@ -1,7 +1,7 @@
 from google import genai
 from google.genai import types
 
-from config import GEMINI_API_KEY, GEMINI_MODEL
+from helpers.config import GEMINI_API_KEY, GEMINI_MODEL
 from core.tools import tools
 from models.conversation import Conversation
 from models.io_interface import ConsoleIO
