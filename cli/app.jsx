@@ -19,7 +19,10 @@ const App = () => {
   const handleQuery = async (text) => {
     const cleanText = text.trim().toLowerCase();
     if (!cleanText) return;
-    if (cleanText === EXIT) exit();
+    if (cleanText === EXIT) {
+      exit();
+      return;
+    }
 
     const userMessage = { id: Date.now(), text: text, sender: 'user' };
     setHistory((prev) => [...prev, userMessage]);
