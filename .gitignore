@@ -15,6 +15,7 @@ __pycache__/
 
 # node / npm
 **/node_modules/
+.prettierrc
 
 # docker
 workspace/
